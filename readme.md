@@ -65,12 +65,6 @@ Unlike image-based verification, this approach leverages **dynamic signature fea
 * Visualization: Compare two signatures side by side with plotted coordinates.
 ---
 
-## Technologies
-* Python 3.x
-* TensorFlow 2.x / Keras
-* NumPy
-* Matplotlib
----
 
 ## Project Flow
 
@@ -125,6 +119,13 @@ predict_similarity(
 * model: Trained Siamese model
 * max_len: Maximum signature length for padding
 * threshold: Distance threshold for Genuine/Forged classification
+---
+
+## Technologies
+* Python 3.x
+* TensorFlow 2.x / Keras
+* NumPy
+* Matplotlib
 ---
 
 ## Future Improvements

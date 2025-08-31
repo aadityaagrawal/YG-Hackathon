@@ -1,21 +1,48 @@
-# 🖋️ YG Hackathon – Online Signature Verification <img src="image.png" alt="Alt Text" style="height:1.5em; vertical-align:middle;">
+# **AI-Powered Signature Verification System ✒️**
 
-This project implements an **Online Signature Verification System** using a **Siamese LSTM Network**.  
+This project implements a deep learning model to verify the authenticity of digital signatures. It uses a Siamese network with Bidirectional LSTM layers to analyze the dynamic properties of a signature—such as path, speed, and pressure—to distinguish between genuine and forged signatures. The project includes a complete workflow from synthetic data generation to model training, evaluation, and explainable AI (XAI) reporting.
 
-Unlike image-based verification, this approach leverages **dynamic signature features** — coordinates, pressure, and timing — to detect **genuine vs. forged signatures**.
+## **✨ Key Features**
 
-✅ Works on synthetic and realistic mock data  
-✅ Detects skilled forgeries based on signature dynamics  
-✅ Provides visualization for easy comparison  
+* **Siamese Network:** Utilizes a Siamese architecture with shared weights to learn a powerful similarity metric between two signatures.  
+* **Dynamic Feature Analysis:** The model is trained on four key features: X-Y coordinates, pressure, and the time delta (dt) between points, allowing it to capture the unique rhythm and dynamics of a person's signature.  
+* **Synthetic Data Generation:** Includes a robust script to generate a complex synthetic dataset, creating unique signature styles for multiple users and simulating natural variations.  
+* **Explainable AI (XAI) Reports:** Generates a detailed 2x2 comparison report using **Occlusion Analysis** to visualize which parts of a signature were most critical to the model's decision, providing transparency and insight.  
+* **End-to-End Workflow:** A complete Jupyter Notebook (YI\_HACKATHON\_FINAL (3).ipynb) that covers the entire process from data creation to final prediction and analysis.
 
----
+## **🚀 How It Works**
+
+The project follows a standard machine learning pipeline broken down into several key steps:
+
+### **1\. Data Generation and Preparation**
+
+Since real signature data is private, we generate a synthetic dataset. The script creates unique "styles" for different users and then generates multiple signature samples for each. These are then paired into "genuine" (same user) and "forged" (different user) examples for training. All sequences are padded to a uniform length.
+
+### **2\. Model Architecture**
+
+The core of the project is a **Siamese network**.
+
+* **Base Network:** A Bidirectional LSTM model acts as an encoder. It processes a single signature sequence and outputs a fixed-size numerical representation called an **embedding** (a "fingerprint").  
+* **Comparison:** To compare two signatures, both are passed through the *same* base network. The model then calculates the **Euclidean distance** between the two resulting embeddings. A small distance indicates a high similarity.
+
+### **3\. Training**
+
+The model is trained using a **contrastive loss function**. This special loss function teaches the model to minimize the distance between embeddings of genuine signatures while maximizing the distance between embeddings of forged signatures.
+
+### **4\. Prediction and Explainability**
+
+After training, the model can predict the authenticity of any new signature pair.
+
+* **Prediction:** The model outputs a distance score, which is compared against a decision **threshold** to classify the pair as "Genuine" or "Forged."  
+* **XAI Report:** A detailed report is generated that includes:  
+  * **Occlusion Analysis:** A heatmap on the signature path showing the most important regions.  
+  * **Prediction Summary:** The final verdict and distance score.  
+  * **Dynamic Statistics:** A quantitative comparison of the signatures' speed and pressure profiles.
 
 ## Workflow Diagram
 
 <!-- ![Workflow Diagram](./model.png) -->
-*Figure: Signature verification pipeline*
 
-```
                 +-----------------------------------+
                 |      Signature Verification       |
                 +-----------------+ +---------------+
@@ -54,88 +81,20 @@ Unlike image-based verification, this approach leverages **dynamic signature fea
                 |      Signature Pair Outcome       |
                 |   (Genuine or Forged)             |
                 +-----------------------------------+
-```
+
 ---
 
-## Key Features
-* Dynamic Signature Features: Uses [x, y, pressure, dt] instead of static images.
-* Siamese Network with Bidirectional LSTM: Learns signature embeddings and measures similarity.
-* Contrastive Loss Function: Penalizes distance for genuine signatures and rewards difference for forgeries.
-* Synthetic & Realistic Data Generator: Simulates genuine variations and skilled forgeries.
-* Visualization: Compare two signatures side by side with plotted coordinates.
----
+## **🛠️ How to Use**
 
+1. **Clone the repository:**  
+   git clone \<your-repo-url\>
 
-## Project Flow
+2. **Install dependencies:**  
+   pip install numpy tensorflow matplotlib scikit-learn
 
-1. Generate Signature Data
-
-    1. Synthetic signatures with random noise and dynamics.
-    2. Realistic mock signatures simulating human handwriting variations.
-
-2. Preprocess Signatures
-
-    1. Normalize coordinates to origin.
-    2. Scale to 1x1 bounding box.
-    3. Pad sequences to same length.
-
-3. Siamese LSTM Model
-
-    1. Bidirectional LSTM layers extract embeddings.
-    2. Embeddings from two signatures are compared using Euclidean distance.
-
-4. Contrastive Loss Training
-
-    1. Minimizes distance for genuine pairs.
-    2. Maximizes distance for forged pairs.
-
-5. Prediction & Visualization
-
-    1. Input two signatures → Model predicts distance.
-    2. Distance < Threshold → Genuine, else Forged.
-    3. Plot both signatures for visual confirmation.
----
-
-## Sample Testing
-* Genuine Pair → Distance = 0.12 → Predicted as Genuine ✅
-* Forged Pair → Distance = 0.43 → Predicted as Forged ❌
-
-Visualization of signatures is automatically plotted for manual inspection.
----
-
-## Usage
-```
-from signature_verification import predict_similarity
-
-predict_similarity(
-    signature1, signature2, 
-    model=siamese_model,
-    max_len=MAX_LEN, 
-    threshold=THRESHOLD
-)
-```
-
-* signature1, signature2: Arrays of [x, y, pressure, dt]
-* model: Trained Siamese model
-* max_len: Maximum signature length for padding
-* threshold: Distance threshold for Genuine/Forged classification
----
-
-## Technologies
-* Python 3.x
-* TensorFlow 2.x / Keras
-* NumPy
-* Matplotlib
----
-
-## Future Improvements
-1. Train on real datasets like SVC2004 or MCYT
-2. Learn optimal threshold dynamically
-3. Add velocity & angular features to improve accuracy
-4. Deploy as a web application for real-time verification
----
-
-## Why This Approach?
-1. Dynamic features (pressure & speed) make the system resistant to skilled forgery.
-2. Siamese architecture allows learning a similarity metric rather than classifying each signature independently.
-3. Visualization provides intuitive feedback for users and auditors.
+3. **Run the Notebook:** Open and run the YI\_HACKATHON\_FINAL (3).ipynb file in a Jupyter environment like Jupyter Lab or Google Colab. The notebook is self-contained and will:  
+   * Generate the synthetic dataset.  
+   * Define and compile the model.  
+   * Train the Siamese network.  
+   * Evaluate the model and display sample predictions.  
+   * Generate a final, detailed XAI report comparing a genuine signature to a skilled forgery.

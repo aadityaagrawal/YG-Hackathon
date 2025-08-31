@@ -8,7 +8,7 @@ This project implements a deep learning model to verify the authenticity of digi
 * **Dynamic Feature Analysis:** The model is trained on four key features: X-Y coordinates, pressure, and the time delta (dt) between points, allowing it to capture the unique rhythm and dynamics of a person's signature.  
 * **Synthetic Data Generation:** Includes a robust script to generate a complex synthetic dataset, creating unique signature styles for multiple users and simulating natural variations.  
 * **Explainable AI (XAI) Reports:** Generates a detailed 2x2 comparison report using **Occlusion Analysis** to visualize which parts of a signature were most critical to the model's decision, providing transparency and insight.  
-* **End-to-End Workflow:** A complete Jupyter Notebook (YI\_HACKATHON\_FINAL (3).ipynb) that covers the entire process from data creation to final prediction and analysis.
+* **End-to-End Workflow:** A complete Jupyter Notebook (404-FOUND_YI_HACKATHON_FINAL.ipynb) that covers the entire process from data creation to final prediction and analysis.
 
 ## **🚀 How It Works**
 

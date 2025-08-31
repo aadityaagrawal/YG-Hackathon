@@ -87,7 +87,7 @@ After training, the model can predict the authenticity of any new signature pair
 ## **🛠️ How to Use**
 
 1. **Clone the repository:**  
-   git clone \<your-repo-url\>
+   git clone https://github.com/aadityaagrawal/YG-Hackathon.git
 
 2. **Install dependencies:**  
    pip install numpy tensorflow matplotlib scikit-learn
